@@ -17,8 +17,8 @@ class CreateCompanyUserVacationsTable extends Migration
             $table->increments('id');
             $table->integer('company_id');
             $table->integer('user_id');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }

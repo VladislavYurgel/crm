@@ -18,8 +18,8 @@ class CreateCalendarToDosTable extends Migration
             $table->integer('calendar_id');
             $table->string('title');
             $table->text('description');
-            $table->timestamp('start_date');
-            $table->timestamp('end_date');
+            $table->date('start_date');
+            $table->date('end_date');
             $table->timestamps();
         });
     }
