@@ -2,7 +2,7 @@
 
 namespace App\Http\Middleware;
 
-use App\Http\Resources\ResponseStatuses;
+use App\Http\Resources\Contracts\ResponseStatuses;
 use App\Http\Resources\UserResource;
 use Closure, Exception, JWTAuth;
 use Tymon\JWTAuth\Exceptions\TokenExpiredException;

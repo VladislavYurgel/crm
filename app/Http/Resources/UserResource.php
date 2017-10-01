@@ -2,6 +2,8 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Contracts\BaseApiResource;
+
 class UserResource extends BaseApiResource
 {
     /**

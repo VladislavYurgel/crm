@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Resources;
+namespace App\Http\Resources\Contracts;
 
 use Illuminate\Http\Resources\Json\Resource;
 
@@ -8,10 +8,10 @@ class BaseApiResource extends Resource
 {
     const DATA_WRAP_FIELD = 'result';
 
-    private $status = self::STATUS_SUCCESS;
     private $messages = [];
     private $errNumber = 0;
     private $token;
+    private $status = ResponseStatuses::SUCCESS;
 
     public function __construct($resource = null)
     {
