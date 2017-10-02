@@ -18,6 +18,7 @@ class CreateCompaniesTable extends Migration
             $table->integer('company_parent_id')->nullable();
             $table->string('name');
             $table->text('description');
+            $table->integer('created_by');
             $table->timestamps();
         });
     }

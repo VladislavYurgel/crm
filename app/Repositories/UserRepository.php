@@ -9,6 +9,11 @@ class UserRepository
 {
     const MIN_PASS_LENGTH = 6;
 
+    /**
+     * Create the user
+     * @param RegisterRequest $request
+     * @return mixed
+     */
     public function create(RegisterRequest $request)
     {
         $data = $request->all();

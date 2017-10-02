@@ -30,6 +30,6 @@ class CreateUserPositionsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_user_positions');
+        Schema::dropIfExists('user_positions');
     }
 }

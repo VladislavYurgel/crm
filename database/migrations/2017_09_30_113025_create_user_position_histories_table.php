@@ -32,6 +32,6 @@ class CreateUserPositionHistoriesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('company_user_position_histories');
+        Schema::dropIfExists('user_position_histories');
     }
 }
