@@ -2,6 +2,7 @@
 
 namespace App\Http\Middleware;
 
+use App\Http\Resources\Contracts\BaseApiResource;
 use App\Http\Resources\Contracts\ResponseStatuses;
 use App\Http\Resources\UserResource;
 use Closure, Exception, JWTAuth;
@@ -19,26 +20,26 @@ class AuthJWT
      */
     public function handle($request, Closure $next)
     {
-        try {
-            JWTAuth::toUser($request->input('token'));
-        } catch (Exception $exception) {
-            if ($exception instanceof TokenInvalidException) {
-                return (new UserResource())
-                    ->setStatus(ResponseStatuses::ERROR)
-                    ->addMessage('Token is invalid')
-                    ->setErrorNumber(config('error.auth.invalid_token'));
-            } else if ($exception instanceof TokenExpiredException) {
-                return (new UserResource())
-                    ->setStatus(ResponseStatuses::ERROR)
-                    ->addMessage('Token is expired')
-                    ->setErrorNumber(config('error.auth.expired_token'));
-            } else {
-                return (new UserResource())
-                    ->setStatus(ResponseStatuses::ERROR)
-                    ->addMessage('Something is wrong');
-            }
-        }
+        $response = new BaseApiResource();
 
-        return $next($request);
+        try {
+            JWTAuth::parseToken()->authenticate();
+
+            return $next($request);
+        } catch (TokenInvalidException $exception) {
+            $response->setStatus(ResponseStatuses::ERROR)
+                ->addMessage('Token is invalid');
+        } catch (TokenExpiredException $exception) {
+            $response->setStatus(ResponseStatuses::ERROR)
+                ->addMessage('Token is expired');
+        } catch (Exception $exception) {
+            $response->setStatus(ResponseStatuses::ERROR)
+                ->addMessage("Token not found");
+        };
+
+        return response([
+            'message' => $response->getMessages(),
+            'status' => ResponseStatuses::ERROR
+        ], 500);
     }
 }

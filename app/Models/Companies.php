@@ -15,7 +15,8 @@ class Companies extends Model
     protected $fillable = [
         'company_parent_id',
         'name',
-        'description'
+        'description',
+        'created_by'
     ];
 
     /**

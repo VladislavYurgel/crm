@@ -10,7 +10,17 @@ class CompanyRequest extends BaseApiRequest
     public function rules()
     {
         return [
-
+            'company_parent_id' => [
+                'integer'
+            ],
+            'name' => [
+                'string',
+                'required',
+                'min:1'
+            ],
+            'description' => [
+                'string'
+            ]
         ];
     }
 }
