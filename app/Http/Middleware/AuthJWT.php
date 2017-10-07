@@ -40,6 +40,6 @@ class AuthJWT
         return response([
             'message' => $response->getMessages(),
             'status' => ResponseStatuses::ERROR
-        ], 500);
+        ], 200);
     }
 }
