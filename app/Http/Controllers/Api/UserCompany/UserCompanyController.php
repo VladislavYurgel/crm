@@ -15,7 +15,7 @@ class UserCompanyController extends ApiController
      */
     public function getUserCompanies()
     {
-        $userCompanies = $this->user()->companies()->get();
+        $userCompanies = $this->user()->companies()->with('company')->get()->pluck('company');
 
         return (new BaseApiResource($userCompanies));
     }

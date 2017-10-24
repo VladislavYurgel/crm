@@ -11,6 +11,12 @@ Route::group(['middleware' => 'api', 'namespace' => 'Api'], function() {
             Route::group(['namespace' => 'Company'], function() {
                 Route::post('company/create', 'CompanyController@create');
                 Route::post('company/{id}/update', 'CompanyController@update');
+                Route::get('company/{company}/departments', 'CompanyDepartmentsController@departments');
+                Route::post('company/{company}/departments/create', 'CompanyDepartmentsController@create');
+                Route::post('company/{company}/departments/update', 'CompanyDepartmentsController@update');
+                Route::get('company/{company}/positions', 'CompanyPositionsController@getList');
+                Route::post('company/{company}/positions/create', 'CompanyPositionsController@store');
+                Route::get('company/{company}/users', 'CompanyController@getUsers');
             });
 
             Route::group(['namespace' => 'UserCompany'], function() {

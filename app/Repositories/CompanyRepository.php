@@ -5,6 +5,7 @@ namespace App\Repositories;
 use App\Exceptions\Company\CompanyNotFoundException;
 use App\Http\Requests\CompanyRequest;
 use App\Models\Companies;
+use App\User;
 
 class CompanyRepository
 {
@@ -12,9 +13,13 @@ class CompanyRepository
      * Create the company
      * @param CompanyRequest $request
      * @return Companies
+     * @throws \Exception
      */
     public function create(CompanyRequest $request)
     {
+        if (!\Auth::check()) {
+            throw new \Exception("User not authorized");
+        }
         $data = $request->except('parent_company_id');
         $data['created_by'] = \Auth::user()->id;
         $company = Companies::create($data);

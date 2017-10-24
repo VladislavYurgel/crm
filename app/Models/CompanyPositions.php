@@ -11,5 +11,11 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CompanyPositions extends Model
 {
-    //
+    protected $fillable = [
+        'title',
+        'company_id',
+        'department_id',
+        'default_salary',
+        'description'
+    ];
 }

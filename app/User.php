@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Models\Companies;
+use App\Models\CompanyUsers;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Tymon\JWTAuth\Contracts\JWTSubject;
@@ -12,6 +13,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  *
  * @property-read \Illuminate\Notifications\DatabaseNotificationCollection|\Illuminate\Notifications\DatabaseNotification[] $notifications
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\CompanyUsers[] $companies
  */
 class User extends Authenticatable implements JWTSubject
 {
@@ -61,6 +63,6 @@ class User extends Authenticatable implements JWTSubject
      */
     public function companies()
     {
-        return $this->hasMany(Companies::class, 'created_by', 'id');
+        return $this->hasMany(CompanyUsers::class, 'user_id', 'id');
     }
 }

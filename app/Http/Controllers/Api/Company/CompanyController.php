@@ -3,13 +3,16 @@
 namespace App\Http\Controllers\Api\Company;
 
 use App\Exceptions\Company\CompanyNotFoundException;
+use App\Http\Controllers\Api\ApiController;
 use App\Http\Requests\CompanyRequest;
 use App\Http\Resources\CompanyResource;
 use App\Http\Resources\Contracts\ResponseStatuses;
+use App\Models\Companies;
 use App\Repositories\CompanyRepository;
 use App\Http\Controllers\Controller;
+use App\Repositories\CompanyUserRepository;
 
-class CompanyController extends Controller
+class CompanyController extends ApiController
 {
     /**
      * @var CompanyRepository
@@ -17,12 +20,19 @@ class CompanyController extends Controller
     private $companyRepository;
 
     /**
+     * @var CompanyUserRepository
+     */
+    private $companyUserRepository;
+
+    /**
      * CompanyController constructor.
      * @param CompanyRepository $companyRepository
+     * @param CompanyUserRepository $companyUserRepository
      */
-    public function __construct(CompanyRepository $companyRepository)
+    public function __construct(CompanyRepository $companyRepository, CompanyUserRepository $companyUserRepository)
     {
         $this->companyRepository = $companyRepository;
+        $this->companyUserRepository = $companyUserRepository;
     }
 
     /**
@@ -34,13 +44,31 @@ class CompanyController extends Controller
     {
         try {
             $company = $this->companyRepository->create($request);
-        } catch (CompanyNotFoundException $exception) {
+            $this->companyUserRepository->assign($this->user(), $company);
+        } catch (\Exception $exception) {
             return (new CompanyResource())
                 ->setStatus(ResponseStatuses::ERROR)
                 ->addMessage($exception->getMessage());
         }
 
         return new CompanyResource($company);
+    }
+
+    /**
+     * @param Companies $company
+     * @return $this|CompanyResource
+     */
+    public function getUsers(Companies $company)
+    {
+        try {
+            $users = $this->companyUserRepository->getUsers($company);
+
+            return new CompanyResource($users);
+        } catch (\Exception $exception) {
+            return (new CompanyResource())
+                ->addMessage($exception->getMessage())
+                ->setStatus(ResponseStatuses::ERROR);
+        }
     }
 
     /**

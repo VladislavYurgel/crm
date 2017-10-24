@@ -11,5 +11,8 @@ use Illuminate\Database\Eloquent\Model;
  */
 class CompanyDepartments extends Model
 {
-    //
+    protected $fillable = [
+        'name',
+        'description'
+    ];
 }

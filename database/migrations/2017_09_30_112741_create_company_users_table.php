@@ -19,7 +19,7 @@ class CreateCompanyUsersTable extends Migration
             $table->integer('user_id');
             $table->timestamp('hire_date')->nullable();
             $table->timestamp('fire_date')->nullable();
-            $table->integer('role_id');
+            $table->integer('role_id')->nullable();
             $table->timestamps();
         });
     }
